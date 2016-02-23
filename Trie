@@ -1,0 +1,55 @@
+public class Trie<Value>{
+	
+	
+
+	private class Node {
+		
+		private Object item;
+		@SuppressWarnings("unchecked")
+		private Node[] next = (Node[])(new Object[R]);
+	}
+	
+	private static int R = 256;
+	private Node root = new Node();
+
+	private Node put(Node node, String key, Value item, int depth){
+		
+		if(node == null)				//we reach the end of a particular node/ create new node for additional keys
+			node = new Node();
+		if(depth == key.length()){
+			node.item = item;
+			return node;
+		}
+		char c = key.charAt(depth);
+		node.next[c] = put(node.next[c], key, item, depth + 1);
+		return node;
+	}
+	
+
+	public void put(String key, Value item){
+		root = put(root, key, item, 0);
+	}
+	
+	
+	private Node get(Node node, String key, int depth){
+		if( node == null)
+			return null;
+		if(depth == key.length())
+			return node;
+		char c = key.charAt(depth);
+		return get(node.next[c], key,depth + 1);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Value get(String key){
+		Node node = get(root, key, 0);
+		if(node == null)
+			return null;
+		return (Value) node.item;
+	}
+
+	
+	public boolean conatins(String key){
+		return get(key) != null ;
+	}
+}
