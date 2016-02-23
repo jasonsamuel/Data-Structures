@@ -1,0 +1,32 @@
+public class BreadthFirstSearch {
+	
+	private boolean[] marked;
+	private int[] edgeTo;
+	private int[] dist;
+	@SuppressWarnings("unused")
+	private int source;
+	
+	public BreadthFirstSearch(Graph G, int source){
+		marked = new boolean[G.V()];
+		edgeTo = new int[G.V()];
+		dist = new int[G.V()];
+		this.source = source;
+		bfs(G,source);
+	}
+	
+	public void bfs(Graph G, int v){
+		marked[v] = true;
+		Queue q = new Queue();
+		q.enqueue(v);
+		while(!q.isEmpty()){
+			v = q.dequeue();
+			for(int w : G.adj(v)){
+				q.enqueue(w);
+				marked[w] = true;
+				edgeTo[w] = v;
+				dist[w] = dist[v] + 1;
+			}
+		}
+	}
+
+}
