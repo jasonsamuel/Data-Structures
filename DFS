@@ -1,0 +1,41 @@
+public class DepthFirstSearch {
+	
+	private boolean[] marked;
+	private int[] egdeTo;
+	private int source;
+
+	
+	public DepthFirstSearch(Graph G, int source){
+		marked = new boolean[G.V()];
+		egdeTo = new int[G.V()];
+		this.source = source;
+		
+		dfs(G, source);
+	}
+	
+	public void dfs(Graph G, int source){
+		marked[source] = true;
+		for(int w : G.adj(source)){
+			if(!marked[w]){
+				dfs(G,w);
+				egdeTo[w] = source;
+			}
+		}
+	}
+	
+	public boolean hasPathTo(int v){
+		return marked[v] ;
+	}
+	
+	
+	public Iterable<Integer> pathTo(int v){
+		if(!hasPathTo(v))
+			return null;
+		Stack paths = new Stack();
+		for(int x = v; x != source; x = egdeTo[x]){
+			paths.push(x);
+		}
+		paths.push(source);
+		return paths;
+	}
+}
