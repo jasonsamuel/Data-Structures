@@ -1,0 +1,49 @@
+public class BST {
+	
+	public class Node{
+		
+		int value;
+		Node left;
+		Node right;
+		
+		public Node(int v){
+			value = v;
+		}
+		
+	}
+	
+	private Node root = null;
+	
+	private Node put(Node node, int value){
+		if(node == null)
+			return new Node(value);
+		if(value < node.value)
+			return put(node.left, value);
+		else if(value > node.value)
+			return put(node.right, value);
+		else
+			return node;
+	}
+	
+	public void put(int value){
+		put(root,value);
+	}
+	
+	private int get(Node node, int value) throws Exception{
+		if(node == null)
+			throw new Exception();
+		else if(value < node.value)
+			return get(node.left, value);
+		else if(value > node.value)
+			return get(node.right, value);
+		else
+			return node.value;
+	}
+	
+	public int get(int value) throws Exception{
+		return get(root, value);
+	}
+	
+	
+
+}
